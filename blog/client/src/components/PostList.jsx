@@ -5,11 +5,17 @@ import CommentList from './CommentList';
 
 function PostList() {
     const [posts, setPosts] = useState({});
+    // const [postlist, setPostlist] = useState({});
     const fechPosts = async ()=>{
-        axios.get("http://localhost:4000/posts")
+      // await  axios.get("http://localhost:4000/posts")
+      // .then(res =>{
+      //   setPosts(res.data)
+      //   // console.log(res.data);
+      // })
+      await axios.get("http://localhost:4002/posts")
       .then(res =>{
         setPosts(res.data)
-        // console.log(res.data);
+        console.log(res.data);
       })
     }
     useEffect(() => {
@@ -23,7 +29,7 @@ function PostList() {
                 <h3 className='card-title'>{post.title}</h3> 
                 <CommentCreate postId={post.id}/>
                 <hr />
-                <CommentList  postId={post.id}/>
+                <CommentList  postId={post.id} comments={post.comments}/>
             </div>
                  
         </div>
