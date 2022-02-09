@@ -1,0 +1,17 @@
+version: '3'
+services:
+  post-services:
+    image: blog_node-app
+    build: 
+      context: ./posts
+      args:
+        NODE_ENV: development
+    ports:
+      - "4005:4000"
+    environment:
+      - PORT=4000
+      - NODE_ENV=development
+    volumes:
+      - ./posts/:/posts:ro
+      - /posts/node_modules
+    command: ["npm", "start"]

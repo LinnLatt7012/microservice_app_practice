@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
 const app = express();
+const port= process.env.PORT || 3000
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -34,6 +35,6 @@ app.post('/events', function (req, res) {
   res.status(201).send('OK')
 })
 
-app.listen(4000, ()=>{
-    console.log('http://localhost:4000');
+app.listen(port, ()=>{
+    console.log('listen on http://localhost:',port);
 })
