@@ -1,15 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { default: axios } = require('axios');
 const app = express();  
 
 app.use(bodyParser.json());
 app.use(cors());
-
-const posts= {}
-app.post('/events', (req, res) =>{
-    const {type, data}= req.body;
-    
+const eventsHandler = (type,data)=>{
     if(type == 'PostCreated'){
         posts[data.id]  = {...data,comments:[]}
     }
@@ -20,22 +17,34 @@ app.post('/events', (req, res) =>{
         posts[postId].comments = comments;
         console.log('res',comments);
     }if(type=='CommentUpdated'){
-        console.log('reached');
         const { id, content, postId,status} =data;
         let comments = posts[postId].comments || []
         const comment = comments.find(comment=>comment.id==id)
         comment.status=status
         comment.content=content
-        console.log('res',comments);
-        // posts[postId].comments = comments;
-        // console.log("res",comments);
     }
+}
+
+const posts= {}
+app.post('/events', (req, res) =>{
+    const {type, data}= req.body;
+    
+    eventsHandler(type,data);
+
     res.send({status: 'OK' });
 })
 
 app.get('/posts',(req, res) =>{
     res.status(201).send(posts)
 })
-app.listen(4002, ()=>{
+app.listen(4002, async ()=>{
     console.log('Listening on http://localhost:4002');
+
+    const res = await axios.get('http://localhost:4005/events');
+    console.log(res);
+    for (let event of res.data) {
+        console.log('Processing event:',event.type);
+        const {type,data} = event;
+        eventsHandler(type,data);
+    }
 })
