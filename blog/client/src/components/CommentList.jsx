@@ -16,7 +16,11 @@ function CommentList({postId,comments}) {
       <dt>{comments.length}  Comments</dt>
       <dl>
       {comments.map(comment=>(
-          <li key={comment.id} className="card-text ml-5 pl-0">{comment.content}</li>
+          comment.status=='pending'?
+            <li key={comment.id} className="card-text ml-5 pl-0 text-secondary">{comment.content}</li>:
+          comment.status=='approved'?
+            <li key={comment.id} className="card-text ml-5 pl-0">{comment.content} </li>:
+            <li key={comment.id} className="card-text ml-5 pl-0 text-danger text-decoration-line-through">{comment.content}</li>
       ))}</dl>
 
   </ul>;
