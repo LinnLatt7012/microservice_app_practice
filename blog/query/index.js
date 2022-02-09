@@ -9,16 +9,27 @@ app.use(cors());
 const posts= {}
 app.post('/events', (req, res) =>{
     const {type, data}= req.body;
-    console.log('reached');
+    
     if(type == 'PostCreated'){
         posts[data.id]  = {...data,comments:[]}
     }
     if(type == 'CommentCreated'){
-        const comment = posts[data.postId].comments || []
-        comment.push({id:data.id,content:data.content})
-        posts[data.postId].comments = comment;
+        const { id, content, postId,status} =data
+        const comments = posts[postId].comments || []
+        comments.push({id,content,status})
+        posts[postId].comments = comments;
+        console.log('res',comments);
+    }if(type=='CommentUpdated'){
+        console.log('reached');
+        const { id, content, postId,status} =data;
+        let comments = posts[postId].comments || []
+        const comment = comments.find(comment=>comment.id==id)
+        comment.status=status
+        comment.content=content
+        console.log('res',comments);
+        // posts[postId].comments = comments;
+        // console.log("res",comments);
     }
-    console.log("res",posts);
     res.send({status: 'OK' });
 })
 
