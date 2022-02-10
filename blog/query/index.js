@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { default: axios } = require('axios');
 const app = express();  
-
+const port= process.env.PORT || 4002
 app.use(bodyParser.json());
 app.use(cors());
 const eventsHandler = (type,data)=>{
@@ -37,11 +37,11 @@ app.post('/events', (req, res) =>{
 app.get('/posts',(req, res) =>{
     res.status(201).send(posts)
 })
-app.listen(4002, async ()=>{
+app.listen(port, async()=>{
     console.log('Listening on http://localhost:4002');
 
-    const res = await axios.get('http://localhost:4005/events');
-    console.log(res);
+    const res = await axios.get('http://event-bus:4005/events');
+    console.log(res.data);
     for (let event of res.data) {
         console.log('Processing event:',event.type);
         const {type,data} = event;

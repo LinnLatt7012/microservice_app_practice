@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
 const app = express();
-const port= process.env.PORT || 3000
+const port= process.env.PORT || 4000
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -18,10 +18,11 @@ app.get('/posts', (req, res) => {
 app.post('/posts', async(req, res) => {
   const id = randomBytes(4).toString('hex')
   const { title } = req.body;
+  console.log("reach ", title);
   posts[id]  = {
         id, title
   }
-  await axios.post('http://localhost:4005/events',{
+  await axios.post('http://event-bus:4005/events',{
     type:'PostCreated',
     data:{
       id,title
