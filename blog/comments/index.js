@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const axios = require('axios');
 const cors = require('cors');
+const port= process.env.PORT || 4001
 
 app.use(bodyParser.json());
 app.use(cors())
@@ -23,7 +24,7 @@ app.post('/posts/:pid/comments',async (req, res) => {
         id, content, status:'pending'
   })
   commentsByPostId[pid] =comment;
-  await axios.post('http://localhost:4005/events',{
+  await axios.post('http://event-bus:4005/events',{
     type:'CommentCreated',
     data:{
       id,content,postId:pid,status:'pending'
@@ -41,7 +42,7 @@ app.post('/events', async (req, res) => {
       let comments = commentsByPostId[postId] || []
       const comment = comments.find(comment=>comment.id==id)
       comment.status =status;
-      setTimeout(async ()=>{await axios.post('http://localhost:4005/events',{
+      setTimeout(async ()=>{await axios.post('http://event-bus:4005/events',{
         type:'CommentUpdated',
         data:{
           id, content, postId,status
@@ -53,6 +54,6 @@ app.post('/events', async (req, res) => {
   res.status(201).send('Ok')
 })
 
-app.listen(4001, ()=>{
-    console.log('http://localhost:4001');
+app.listen(port, ()=>{
+  console.log('listen on http://localhost:',port);
 })
