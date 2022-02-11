@@ -44,6 +44,8 @@ services:
     volumes:
       - ./query:/app:ro
       - /app/node_modules
+    depends_on:
+      - event-bus
     command: ["npm", "start"]
   moderation:
     build: 
