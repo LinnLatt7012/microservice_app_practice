@@ -13,7 +13,7 @@ function PostCreate() {
         }
         // console.log(title);
         setError('');
-        await axios.post('http://localhost:4000/posts',{
+        await axios.post('http://posts:4000/posts',{
             title
         }
         ).then(data=>console.log("posts", data))
