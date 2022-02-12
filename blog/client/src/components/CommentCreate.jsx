@@ -13,7 +13,7 @@ function CommentCreate({postId}) {
         }
         // console.log(title);
         setError('');
-        await axios.post('http://comments:4001/posts/'+postId+'/comments',{
+        await axios.post('http://localhost:4001/posts/'+postId+'/comments',{
             content
         }
         ).then(data=>console.log("coments", data))

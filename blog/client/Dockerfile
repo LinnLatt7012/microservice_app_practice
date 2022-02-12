@@ -1,8 +1,9 @@
 FROM node:16
 WORKDIR /app 
-COPY package.json .
-ARG NODE_ENV
-RUN if [ "$NODE_ENV" = "development" ]; then npm install; else npm install --only=production; fi
+COPY ./package.json .
+COPY ./package-lock.json ./
+RUN npm install 
+RUN npm install react-scripts@3.4.1 -g --silent
 COPY . ./
 ARG PORT
 EXPOSE $PORT
