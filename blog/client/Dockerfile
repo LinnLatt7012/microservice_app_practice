@@ -1,10 +1,11 @@
 FROM node:16
+
 WORKDIR /app 
-# COPY ./package.json .
-# COPY ./package-lock.json ./
-# RUN npm install 
-# RUN npm install react-scripts@3.4.1 -g --silent
-COPY . ./
-ARG PORT
-EXPOSE $PORT
+COPY package.json ./
+COPY package-lock.json ./
+# ENV PORT=4001
+# RUN npm install
+COPY ./ ./
+
+EXPOSE 3000
 CMD ["npm","start"]

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 FROM node:16
 WORKDIR /app 
 COPY ./package.json .
@@ -6,4 +7,13 @@ RUN if [ "$NODE_ENV" = "development" ]; then npm install; else npm install --onl
 COPY . ./
 ARG PORT
 EXPOSE $PORT
+=======
+FROM node:alpine
+
+WORKDIR /app 
+COPY package.json ./
+RUN npm install
+COPY ./ ./
+
+>>>>>>> with_kubernetes
 CMD ["npm","start"]

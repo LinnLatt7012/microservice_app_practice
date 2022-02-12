@@ -24,7 +24,7 @@ app.post('/posts/:pid/comments',async (req, res) => {
         id, content, status:'pending'
   })
   commentsByPostId[pid] =comment;
-  await axios.post('http://event-bus:4005/events',{
+  await axios.post('http://localhost:4005/events',{
     type:'CommentCreated',
     data:{
       id,content,postId:pid,status:'pending'
@@ -42,7 +42,11 @@ app.post('/events', async (req, res) => {
       let comments = commentsByPostId[postId] || []
       const comment = comments.find(comment=>comment.id==id)
       comment.status =status;
+<<<<<<< HEAD
       setTimeout(async ()=>{await axios.post('http://event-bus:4005/events',{
+=======
+      setTimeout(async ()=>{await axios.post('http://localhost:4005/events',{
+>>>>>>> with_kubernetes
         type:'CommentUpdated',
         data:{
           id, content, postId,status
