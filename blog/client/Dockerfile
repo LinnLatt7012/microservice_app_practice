@@ -1,9 +1,11 @@
-FROM node:alphine
+FROM node:16
 
 WORKDIR /app 
 COPY package.json ./
-ENV PORT=4001
-RUN npm install
+COPY package-lock.json ./
+# ENV PORT=4001
+# RUN npm install
 COPY ./ ./
 
+EXPOSE 3000
 CMD ["npm","start"]
