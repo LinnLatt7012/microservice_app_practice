@@ -89,6 +89,6 @@ services:
       - PORT=3000
       - NODE_ENV=development
     volumes:
-      - ./event-bus:/app:ro
+      - ./client:/app:ro
       - /app/node_modules
     command: ["npm", "start"]
