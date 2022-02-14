@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  comments-nodeport-srv
+spec:
+  selector:
+    app:  comments
+  type:  NodePort
+  ports:
+  - name:  comments
+    port:  4001
+    targetPort:  4001
