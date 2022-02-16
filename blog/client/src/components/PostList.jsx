@@ -12,7 +12,7 @@ function PostList() {
       //   setPosts(res.data)
       //   // console.log(res.data);
       // })
-      await axios.get("http://localhost:4002/posts")
+      await axios.get("http://posts.com/posts")
       .then(res =>{
         setPosts(res.data)
         console.log(res.data);
