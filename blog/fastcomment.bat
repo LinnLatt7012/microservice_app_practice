@@ -13,3 +13,5 @@ kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 kubectl get service ingress-nginx-controller --namespace=ingress-nginx 
 
 skaffold
+
+skaffold dev 
