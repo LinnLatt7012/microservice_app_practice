@@ -10,7 +10,7 @@ app.post('/events', async (req, res) =>{
     const {type, data}= req.body;
     if(type == 'CommentCreated'){
         const { id, content, postId} =data
-        const status = content.includes('orange') ? 'rejected':'approved'
+        const status = content.includes('orange')||content.includes('fuck') ? 'rejected':'approved'
         setTimeout(async ()=>{
             await axios.post('http://event-bus-srv:4005/events',{
                 type:'CommentModerated',
@@ -18,7 +18,7 @@ app.post('/events', async (req, res) =>{
                 id,content,postId,status
                 }   
             })
-        })
+        },3000)
     }
     res.status(201).send('OK')
 })
